@@ -1,0 +1,670 @@
+/* CSS ATUALIZADO COM ESTILOS PARA A NOVA LOGO, MELHORIAS GERAIS, SEÇÃO DE INVESTIMENTOS, GRÁFICOS E AUTENTICAÇÃO */
+
+:root {
+    /* As variáveis de cor permanecem as mesmas */
+    --card-bg-color: rgba(35, 35, 45, 0.5); 
+    --text-primary: #f0f0f0; 
+    --text-secondary: #a0a0b0;
+    --text-tertiary: #707080;
+    --border-color: rgba(255, 255, 255, 0.1); 
+    --shadow-color: rgba(0, 0, 0, 0.2);
+    --progress-bar-bg: rgba(0, 0, 0, 0.2);
+    --progress-bar-fill: #f0f0f0; 
+    --btn-bg: #f0f0f0;
+    --btn-text: #1a1a1a;
+    --success-color: #4CAF50;
+    --danger-color: #F44336;
+    --info-color: #2196F3; 
+    --warning-color: #FFC107; 
+
+    /* Novas cores para o gráfico */
+    --chart-color-1: #8A2BE2; /* Amethyst */
+    --chart-color-2: #4682B4; /* SteelBlue */
+    --chart-color-3: #FFD700; /* Gold */
+    --chart-color-4: #DA70D6; /* Orchid */
+    --chart-color-5: #6B8E23; /* OliveDrab */
+    --chart-color-6: #FF6347; /* Tomato */
+    --chart-color-7: #20B2AA; /* LightSeaGreen */
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #12121c;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(121, 82, 255, 0.2), transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 123, 255, 0.2), transparent 40%);
+    background-attachment: fixed;
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-15px); }
+}
+
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 3rem 2rem; 
+    flex-grow: 1; 
+}
+header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding-bottom: 3rem; 
+}
+
+/* --- ESTILOS DA NOVA LOGO --- */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px; 
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -1px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.logo:hover {
+    opacity: 0.8;
+}
+
+.logo svg {
+    stroke: var(--text-primary); 
+    transition: transform 0.4s ease;
+}
+
+.logo:hover svg {
+    transform: rotate(15deg); 
+}
+/* --- FIM DOS ESTILOS DA LOGO --- */
+
+
+nav a { 
+    color: var(--text-secondary); 
+    text-decoration: none; 
+    margin-left: 2rem; 
+    font-weight: 500; 
+    font-size: 0.95rem; 
+    transition: color 0.3s ease; 
+}
+nav a:hover, nav a.active { 
+    color: var(--text-primary); 
+}
+
+/* Visibilidade das Seções */
+.dashboard { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 1.5rem; 
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.dashboard.active-section {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto; 
+    position: relative; 
+    z-index: 1;
+}
+
+.dashboard.hidden-section {
+    opacity: 0;
+    transform: translateY(20px);
+    height: 0; 
+    overflow: hidden; 
+    pointer-events: none; 
+    position: absolute; 
+    width: calc(100% - 4rem); 
+    max-width: 1200px;
+    padding: 0;
+}
+
+
+.column { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 1.5rem; 
+}
+
+.card {
+    background: var(--card-bg-color);
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    padding: 30px;
+    box-shadow: 0 8px 32px 0 var(--shadow-color);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    animation: fadeIn 0.6s ease-out forwards;
+    opacity: 0;
+    position: relative; 
+}
+.card .card-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 1rem; 
+}
+.card h3 { 
+    font-size: 1rem; 
+    font-weight: 600; 
+    margin: 0; 
+    color: var(--text-primary);
+}
+.card .card-subtitle { 
+    font-size: 0.9rem; 
+    color: var(--text-secondary); 
+    margin-bottom: 1.5rem; 
+}
+.balance-amount { 
+    font-size: 2.8rem; 
+    font-weight: 600; 
+    letter-spacing: -2px; 
+    margin-bottom: 1rem; 
+    color: var(--text-primary); 
+}
+
+/* Listas */
+.transaction-list ul, .investment-list ul { 
+    list-style: none; 
+    max-height: 200px; 
+    overflow-y: auto; 
+    padding-right: 10px; 
+}
+.transaction-list li, .goal-item, .report-item, .investment-item { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 12px 0; 
+    border-bottom: 1px solid var(--border-color); 
+    flex-wrap: wrap; 
+}
+.transaction-list li:last-child, .goal-item:last-child, .report-item:last-child, .investment-item:last-child { 
+    border-bottom: none; 
+}
+.transaction-amount.receita { 
+    color: var(--success-color); 
+}
+.transaction-amount.despesa { 
+    color: var(--danger-color); 
+}
+
+/* Metas e Relatórios */
+.goal-item, .report-item { 
+    align-items: flex-start; 
+}
+.goal-info, .report-info, .investment-info { 
+    flex: 1; 
+    min-width: 150px; 
+}
+.goal-info span, .report-info span, .investment-info span { 
+    display: block; 
+}
+.info-description { 
+    font-weight: 500; 
+    color: var(--text-primary);
+}
+.info-subtext { 
+    font-size: 0.85rem; 
+    color: var(--text-secondary); 
+}
+.progress-bar { 
+    width: 100%; 
+    height: 8px; 
+    background-color: var(--progress-bar-bg); 
+    border-radius: 5px; 
+    margin-top: 8px; 
+    overflow: hidden; 
+}
+.progress { 
+    height: 100%; 
+    background-color: var(--progress-bar-fill); 
+    border-radius: 5px; 
+    transition: width 0.4s ease; 
+}
+.goal-actions, .investment-actions { 
+    display: flex; 
+    gap: 0.5rem; 
+    margin-left: auto; 
+}
+
+/* Botões */
+.btn { 
+    display: inline-block; 
+    background-color: var(--btn-bg); 
+    color: var(--btn-text); 
+    padding: 12px 20px; 
+    border-radius: 8px; 
+    text-decoration: none; 
+    font-weight: 600; 
+    font-size: 0.9rem; 
+    transition: all 0.3s ease; 
+    border: none; 
+    cursor: pointer; 
+    margin-top: 1rem; 
+}
+.btn:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+}
+.btn-small { 
+    background-color: rgba(255, 255, 255, 0.1); 
+    color: var(--text-primary); 
+    border: 1px solid var(--border-color); 
+    padding: 5px 12px; 
+    font-size: 0.8rem; 
+    font-weight: 600; 
+    cursor: pointer; 
+    border-radius: 6px; 
+    transition: background-color 0.2s ease; 
+}
+.btn-small:hover { 
+    background-color: rgba(255, 255, 255, 0.2); 
+}
+.delete-btn { 
+    background: var(--danger-color); 
+    color: white; 
+    border: none; 
+    border-radius: 50%; 
+    width: 24px; 
+    height: 24px; 
+    cursor: pointer; 
+    font-size: 14px; 
+    line-height: 24px; 
+    text-align: center; 
+    opacity: 0; 
+    transition: opacity 0.2s ease, transform 0.2s ease; 
+    margin-left: 15px; 
+    flex-shrink: 0; 
+}
+.transaction-list li:hover .delete-btn,
+.investment-list li:hover .delete-btn { 
+    opacity: 1; 
+    transform: scale(1.1); 
+}
+.delete-btn:hover {
+    background: darken(var(--danger-color), 10%); 
+}
+
+/* Modal com efeito de vidro */
+.modal-overlay { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    background-color: rgba(0, 0, 0, 0.6); 
+    opacity: 0; 
+    visibility: hidden; 
+    transition: opacity 0.3s ease, visibility 0.3s ease; 
+    z-index: 1000; 
+}
+.modal-overlay.active { 
+    opacity: 1; 
+    visibility: visible; 
+}
+.modal-content {
+    background: var(--card-bg-color);
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    padding: 30px;
+    box-shadow: 0 8px 32px 0 var(--shadow-color);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    width: 90%;
+    max-width: 500px;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+    position: relative; 
+}
+.modal-overlay.active .modal-content { 
+    transform: translateY(0); 
+}
+.modal-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 2rem; 
+}
+.modal-header h2 { 
+    font-size: 1.2rem; 
+    color: var(--text-primary); 
+}
+.close-modal { 
+    font-size: 1.8rem; 
+    cursor: pointer; 
+    border: none; 
+    background: none; 
+    color: var(--text-secondary); 
+    transition: color 0.2s ease;
+}
+.close-modal:hover {
+    color: var(--text-primary);
+}
+.form-group { 
+    margin-bottom: 1.5rem; 
+}
+.form-group label { 
+    display: block; 
+    font-weight: 500; 
+    margin-bottom: 0.5rem; 
+    font-size: 0.9rem; 
+    color: var(--text-secondary);
+}
+
+/* Estilo para inputs no modo "dark glass" */
+.form-group input, 
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    background-color: rgba(0,0,0,0.2);
+    color: var(--text-primary);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: rgba(121, 82, 255, 0.5); 
+    box-shadow: 0 0 0 3px rgba(121, 82, 255, 0.2);
+}
+.form-group input::placeholder { 
+    color: var(--text-tertiary); 
+}
+.form-group select option { 
+    background-color: #1a1a1a; 
+    color: var(--text-primary); 
+}
+
+/* --- Feedback Messages --- */
+.message-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    opacity: 0;
+    animation: fadeIn 0.4s ease-out forwards;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    min-width: 250px;
+    text-align: center;
+}
+
+.message.success {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.message.error {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.message.info {
+    background-color: var(--info-color);
+    color: white;
+}
+
+.message.hide {
+    animation: fadeOut 0.4s ease-in forwards;
+}
+
+/* --- Error Messages (Form Validation) --- */
+.error-message {
+    color: var(--danger-color);
+    font-size: 0.8rem;
+    margin-top: 5px;
+    height: 18px; 
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.error-message.active {
+    opacity: 1;
+}
+
+/* --- Footer --- */
+.footer {
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* --- Estilos específicos para a lista de Investimentos --- */
+.investment-item .investment-value {
+    font-weight: 600;
+    margin-left: 10px; 
+}
+
+.investment-item .performance-indicator {
+    font-size: 0.85rem;
+    margin-left: 10px;
+}
+.performance-positive {
+    color: var(--success-color);
+}
+.performance-negative {
+    color: var(--danger-color);
+}
+.performance-neutral {
+    color: var(--warning-color);
+}
+.empty-list-message {
+    color: var(--text-tertiary);
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+}
+
+/* --- Estilos para Gráficos --- */
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 250px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.chart-container canvas {
+    max-width: 100%;
+    max-height: 100%;
+    background-color: transparent; 
+}
+
+.empty-chart-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--text-tertiary);
+    text-align: center;
+    font-style: italic;
+    font-size: 0.9rem;
+    padding: 10px;
+    background-color: var(--card-bg-color); 
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    z-index: 2; 
+}
+
+.chart-container:has(canvas:not([data-chart-empty="true"])) .empty-chart-message {
+    display: none;
+}
+
+/* --- Estilos para a Seção de Autenticação --- */
+.auth-section-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ocupa a altura total da viewport */
+    padding: 2rem;
+    /* Ajusta para ficar acima do footer invisível do main-content-area */
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100; /* Garante que está acima do conteúdo principal oculto */
+    background: #12121c; /* Fundo sólido para login */
+}
+
+.auth-card {
+    background: var(--card-bg-color);
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    padding: 40px; /* Um pouco mais de padding */
+    box-shadow: 0 8px 32px 0 var(--shadow-color);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    width: 90%;
+    max-width: 400px; /* Largura máxima para o card de login */
+    text-align: center; /* Centraliza o texto */
+    animation: fadeIn 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+.auth-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.auth-card p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+}
+
+.auth-card .form-group {
+    text-align: left; /* Alinha labels à esquerda */
+}
+
+.auth-card .btn {
+    width: 100%; /* Ocupa a largura total */
+    margin-top: 1.5rem; /* Mais espaço para o botão */
+}
+
+.auth-options {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 768px) {
+    .dashboard {
+        grid-template-columns: 1fr; 
+    }
+
+    .dashboard.hidden-section {
+        width: calc(100% - 2rem); 
+    }
+
+    header {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding-bottom: 2rem;
+    }
+
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    nav a, #logout-btn { /* Ajuste para o botão de sair também */
+        margin-left: 0;
+    }
+
+    .container {
+        padding: 2rem 1rem;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .balance-amount {
+        font-size: 2.2rem;
+    }
+
+    .modal-content {
+        padding: 20px;
+    }
+
+    .investment-actions {
+        margin-top: 10px; 
+        width: 100%; 
+        justify-content: flex-end; 
+    }
+
+    .chart-container {
+        height: 200px; 
+    }
+
+    .auth-card {
+        padding: 30px;
+    }
+
+    .auth-card h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.3rem;
+        gap: 8px;
+    }
+    .logo svg {
+        width: 24px;
+        height: 24px;
+    }
+    .btn {
+        padding: 10px 15px;
+        font-size: 0.85rem;
+    }
+    .modal-header h2 {
+        font-size: 1rem;
+    }
+    .close-modal {
+        font-size: 1.5rem;
+    }
+    .investment-item .info-description {
+        width: 100%; 
+    }
+}

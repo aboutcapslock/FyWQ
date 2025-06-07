@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synthesis | Painel Financeiro Funcional</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <div class="container main-content-area" style="display: none;"> <header>
+            <div class="logo">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 4C18 8.41828 14.4183 12 10 12C5.58172 12 2 15.5817 2 20" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 24C10 19.5817 13.5817 16 18 16C22.4183 16 26 12.4183 26 8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Synthesis</span>
+            </div>
+            <nav>
+                <a href="#" class="nav-link active" data-section="dashboard">Painel</a>
+                <a href="#" class="nav-link" data-section="investments">Investimentos</a>
+                <button class="btn-small" id="logout-btn" style="margin-left: 2rem;">Sair</button> </nav>
+        </header>
+
+        <main class="dashboard active-section" id="dashboard-section">
+            <div class="column">
+                <div class="card card-balance">
+                    <h3 class="card-subtitle">Patrimônio Líquido</h3>
+                    <div class="balance-amount" id="balance">R$ 0,00</div>
+                    <button class="btn" id="open-transaction-modal-btn">Adicionar Transação</button>
+                </div>
+                <div class="card card-reports">
+                    <h3>Despesas por Categoria (Mês Atual)</h3>
+                    <div class="chart-container">
+                        <canvas id="expenses-pie-chart"></canvas>
+                        <div class="empty-chart-message" id="expenses-pie-chart-message">Nenhuma despesa para exibir no gráfico este mês.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="card card-transactions">
+                    <h3>Últimas Transações</h3>
+                    <div class="transaction-list">
+                        <ul id="transaction-list"></ul>
+                    </div>
+                </div>
+                <div class="card card-goals">
+                    <div class="card-header">
+                        <h3>Minhas Metas</h3>
+                        <button class="btn-small" id="open-goal-modal-btn">Nova Meta</button>
+                    </div>
+                    <div class="goal-list" id="goal-list"></div>
+                </div>
+            </div>
+        </main>
+
+        <main class="dashboard hidden-section" id="investments-section">
+            <div class="column">
+                <div class="card card-investment-summary">
+                    <h3 class="card-subtitle">Total Investido</h3>
+                    <div class="balance-amount" id="total-invested">R$ 0,00</div>
+                    <button class="btn" id="open-investment-modal-btn">Adicionar Investimento</button>
+                </div>
+                <div class="card card-investment-performance">
+                    <h3>Resumo de Performance</h3>
+                    <div class="report-list" id="investment-performance-list">
+                        <div class="empty-list-message">Nenhum dado de performance ainda.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="card card-my-investments">
+                    <h3>Meus Investimentos</h3>
+                    <div class="investment-list">
+                        <ul id="investment-list">
+                            <li class="empty-list-message">Nenhum investimento adicionado.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 Synthesis. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <div id="message-container" class="message-container"></div>
+
+    <div class="modal-overlay" id="transaction-modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Nova Transação</h2>
+                <button class="close-modal" data-modal="transaction">&times;</button>
+            </div>
+            <form id="transaction-form">
+                <div class="form-group">
+                    <label for="t-description">Descrição</label>
+                    <input type="text" id="t-description" placeholder="Ex: Salário, Aluguel..." required>
+                    <p class="error-message" id="t-description-error"></p>
+                </div>
+                <div class="form-group">
+                    <label for="t-amount">Valor</label>
+                    <input type="number" id="t-amount" placeholder="0.00" step="0.01" required>
+                    <p class="error-message" id="t-amount-error"></p>
+                </div>
+                <div class="form-group">
+                    <label for="t-type">Tipo</label>
+                    <select id="t-type">
+                        <option value="receita">Receita</option><option value="despesa">Despesa</option>
+                    </select>
+                </div>
+                <div class="form-group" id="t-category-group">
+                    <label for="t-category">Categoria (para despesas)</label>
+                    <select id="t-category">
+                        <option value="Moradia">Moradia</option><option value="Alimentação">Alimentação</option><option value="Transporte">Transporte</option><option value="Saúde">Saúde</option><option value="Lazer">Lazer</option><option value="Educação">Educação</option><option value="Outros">Outros</option><option value="Investimentos">Investimentos</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Salvar Transação</button>
+            </form>
+        </div>
+    </div>
+    <div class="modal-overlay" id="goal-modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header"><h2>Nova Meta Financeira</h2><button class="close-modal" data-modal="goal">&times;</button></div>
+            <form id="goal-form">
+                <div class="form-group">
+                    <label for="g-description">Nome da Meta</label>
+                    <input type="text" id="g-description" placeholder="Ex: Viagem para o Japão" required>
+                    <p class="error-message" id="g-description-error"></p>
+                </div>
+                <div class="form-group">
+                    <label for="g-target-amount">Valor Total</label>
+                    <input type="number" id="g-target-amount" placeholder="25000.00" step="0.01" required>
+                    <p class="error-message" id="g-target-amount-error"></p>
+                </div>
+                <button type="submit" class="btn">Criar Meta</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="investment-modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Novo Investimento</h2>
+                <button class="close-modal" data-modal="investment">&times;</button>
+            </div>
+            <form id="investment-form">
+                <div class="form-group">
+                    <label for="inv-name">Nome do Investimento</label>
+                    <input type="text" id="inv-name" placeholder="Ex: Ações XYZ, Fundo Imobiliário ABC" required>
+                    <p class="error-message" id="inv-name-error"></p>
+                </div>
+                <div class="form-group">
+                    <label for="inv-initial-amount">Valor Inicial Investido</label>
+                    <input type="number" id="inv-initial-amount" placeholder="1000.00" step="0.01" required>
+                    <p class="error-message" id="inv-initial-amount-error"></p>
+                </div>
+                <div class="form-group">
+                    <label for="inv-current-value">Valor Atual (opcional)</label>
+                    <input type="number" id="inv-current-value" placeholder="1050.00" step="0.01">
+                    <p class="error-message" id="inv-current-value-error"></p>
+                </div>
+                <div class="form-group">
+                    <label for="inv-type">Tipo de Investimento</label>
+                    <select id="inv-type">
+                        <option value="acoes">Ações</option><option value="fundo-imobiliario">Fundo Imobiliário</option><option value="renda-fixa">Renda Fixa</option><option value="criptomoedas">Criptomoedas</option><option value="outros">Outros</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Salvar Investimento</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="auth-section-wrapper" id="auth-section">
+        <div class="card auth-card">
+            <h2>Bem-vindo ao Synthesis!</h2>
+            <p>Faça login ou registre-se para gerenciar suas finanças.</p>
+            <form id="auth-form">
+                <div class="form-group">
+                    <label for="auth-email">Email</label>
+                    <input type="email" id="auth-email" placeholder="seu@email.com" required>
+                    <p class="error-message" id="auth-email-error"></p>
+                </div>
+                <div class="form-group">
+                    <label for="auth-password">Senha</label>
+                    <input type="password" id="auth-password" placeholder="Mínimo 6 caracteres" required>
+                    <p class="error-message" id="auth-password-error"></p>
+                </div>
+                <button type="submit" class="btn" id="auth-submit-btn">Entrar / Registrar</button>
+            </form>
+            <div class="auth-options">
+                <button class="btn-small" id="toggle-auth-mode">Novo aqui? Registre-se</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="script.js" defer></script>
+</body>
+</html>
