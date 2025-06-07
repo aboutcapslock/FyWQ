@@ -1,670 +1,586 @@
-/* CSS ATUALIZADO COM ESTILOS PARA A NOVA LOGO, MELHORIAS GERAIS, SEÇÃO DE INVESTIMENTOS, GRÁFICOS E AUTENTICAÇÃO */
+/* Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 :root {
-    /* As variáveis de cor permanecem as mesmas */
-    --card-bg-color: rgba(35, 35, 45, 0.5); 
-    --text-primary: #f0f0f0; 
-    --text-secondary: #a0a0b0;
-    --text-tertiary: #707080;
-    --border-color: rgba(255, 255, 255, 0.1); 
-    --shadow-color: rgba(0, 0, 0, 0.2);
-    --progress-bar-bg: rgba(0, 0, 0, 0.2);
-    --progress-bar-fill: #f0f0f0; 
-    --btn-bg: #f0f0f0;
-    --btn-text: #1a1a1a;
-    --success-color: #4CAF50;
-    --danger-color: #F44336;
-    --info-color: #2196F3; 
-    --warning-color: #FFC107; 
+    /* Cores Preto e Branco Aprimoradas */
+    --color-background: #fdfdfd; /* Branco quase puro para o fundo */
+    --color-white: #ffffff;     /* Branco puro para os cards e navbar */
+    --color-text-dark: #222222; /* Preto suave para textos principais */
+    --color-text-medium: #555555; /* Cinza médio para textos secundários */
+    --color-text-light: #999999; /* Cinza claro para detalhes e placeholders */
+    --color-border: #eeeeee;    /* Borda muito sutil e clara */
+    --color-focus: #cccccc;     /* Cor de foco para elementos interativos */
+    --color-shadow-light: rgba(0, 0, 0, 0.03); /* Sombra mais sutil */
+    --color-shadow-medium: rgba(0, 0, 0, 0.07); /* Sombra mais pronunciada */
+    --color-shadow-navbar: rgba(0, 0, 0, 0.05); /* Sombra específica para a navbar */
+    --color-success: #28a745;   /* Verde para entradas (mantido para clareza em valores) */
+    --color-danger: #dc3545;    /* Vermelho para saídas (mantido para clareza em valores) */
 
-    /* Novas cores para o gráfico */
-    --chart-color-1: #8A2BE2; /* Amethyst */
-    --chart-color-2: #4682B4; /* SteelBlue */
-    --chart-color-3: #FFD700; /* Gold */
-    --chart-color-4: #DA70D6; /* Orchid */
-    --chart-color-5: #6B8E23; /* OliveDrab */
-    --chart-color-6: #FF6347; /* Tomato */
-    --chart-color-7: #20B2AA; /* LightSeaGreen */
+    /* Espaçamentos Compactos */
+    --spacing-xs: 6px;
+    --spacing-sm: 12px;
+    --spacing-md: 20px;
+    --spacing-lg: 30px;
+    --navbar-height: 70px; /* Altura da barra de navegação */
+
+    /* Bordas Compactas */
+    --border-radius-sm: 6px;
+    --border-radius-md: 10px;
+    --border-radius-lg: 20px; /* Bordas arredondadas, mas um pouco menos que antes */
+
+    /* Transições Suaves */
+    --transition-speed: 0.25s;
+    --transition-ease: ease-in-out;
 }
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-    font-family: 'Inter', sans-serif;
-    color: var(--text-primary);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    background: #12121c;
-    background-image: 
-        radial-gradient(circle at 10% 20%, rgba(121, 82, 255, 0.2), transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(0, 123, 255, 0.2), transparent 40%);
-    background-attachment: fixed;
-    min-height: 100vh; 
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--color-background);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinha o conteúdo ao topo para dar espaço à navbar */
+    min-height: 100vh;
+    padding: 0; /* Remove padding do body */
+    color: var(--color-text-dark);
+    line-height: 1.5; /* Linha um pouco mais compacta */
+    overflow-x: hidden;
+    font-size: 0.95em; /* Reduzindo o tamanho base da fonte */
+    position: relative; /* Para o site-wrapper */
+}
+
+/* Novo wrapper para toda a estrutura do site */
+.site-wrapper {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeOut {
-    from { opacity: 1; transform: translateY(0); }
-    to { opacity: 0; transform: translateY(-15px); }
-}
-
-.container { 
-    max-width: 1200px; 
-    margin: 0 auto; 
-    padding: 3rem 2rem; 
-    flex-grow: 1; 
-}
-header { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    padding-bottom: 3rem; 
-}
-
-/* --- ESTILOS DA NOVA LOGO --- */
-.logo {
+/* Barra Superior (Top Navbar) */
+.top-navbar {
+    width: 100%;
+    height: var(--navbar-height);
+    background-color: var(--color-white);
+    box-shadow: 0 2px 10px var(--color-shadow-navbar); /* Sombra suave para a barra */
+    position: sticky; /* Fica fixo ao rolar */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Garante que fique acima de outros elementos */
     display: flex;
+    justify-content: center; /* Centraliza o conteúdo da navbar */
     align-items: center;
-    gap: 12px; 
-    font-size: 1.5rem;
-    font-weight: 600;
+}
+
+.navbar-content {
+    display: flex;
+    justify-content: space-between; /* Espaço entre logo e navegação */
+    align-items: center;
+    width: 100%;
+    max-width: 1000px; /* Largura máxima da barra para manter o minimalismo */
+    padding: 0 var(--spacing-md);
+}
+
+.logo {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: var(--color-text-dark);
     letter-spacing: -1px;
-    cursor: pointer;
-    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: baseline;
+    cursor: default; /* Não é um link, então cursor padrão */
 }
 
-.logo:hover {
-    opacity: 0.8;
+.logo-icon {
+    font-size: 1.2em; /* Ícone da logo maior */
+    color: var(--color-text-dark);
+    margin-right: 2px;
 }
 
-.logo svg {
-    stroke: var(--text-primary); 
-    transition: transform 0.4s ease;
+.logo-text {
+    font-weight: 400; /* Texto mais fino para o resto do nome */
+    color: var(--color-text-medium);
 }
 
-.logo:hover svg {
-    transform: rotate(15deg); 
-}
-/* --- FIM DOS ESTILOS DA LOGO --- */
-
-
-nav a { 
-    color: var(--text-secondary); 
-    text-decoration: none; 
-    margin-left: 2rem; 
-    font-weight: 500; 
-    font-size: 0.95rem; 
-    transition: color 0.3s ease; 
-}
-nav a:hover, nav a.active { 
-    color: var(--text-primary); 
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: var(--spacing-md); /* Espaçamento entre os itens do menu */
 }
 
-/* Visibilidade das Seções */
-.dashboard { 
-    display: grid; 
-    grid-template-columns: 1fr 1fr; 
-    gap: 1.5rem; 
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+.main-nav ul li a {
+    text-decoration: none;
+    color: var(--color-text-medium);
+    font-size: 1em;
+    font-weight: 500;
+    padding: 5px 0;
+    position: relative;
+    transition: color var(--transition-speed) var(--transition-ease);
 }
 
-.dashboard.active-section {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto; 
-    position: relative; 
-    z-index: 1;
+.main-nav ul li a::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    bottom: -3px;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-text-dark); /* Linha preta no hover */
+    transition: transform var(--transition-speed) var(--transition-ease);
 }
 
-.dashboard.hidden-section {
+.main-nav ul li a:hover {
+    color: var(--color-text-dark);
+}
+
+.main-nav ul li a:hover::after {
+    transform: translateX(-50%) scaleX(1); /* Expande a linha no hover */
+}
+
+/* Destaque para o link ativo na navegação */
+.main-nav ul li a.active {
+    color: var(--color-text-dark); /* Torna o texto mais escuro */
+    font-weight: 700; /* Deixa o texto mais bold */
+}
+
+.main-nav ul li a.active::after {
+    transform: translateX(-50%) scaleX(1); /* Garante que a linha esteja sempre visível no ativo */
+}
+
+
+/* Ajustes para o container principal abaixo da navbar */
+.container {
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 10px 30px var(--color-shadow-medium),
+                0 4px 10px var(--color-shadow-light);
+    padding: var(--spacing-lg);
+    width: 100%;
+    max-width: 500px; /* Largura máxima reduzida para ocupar menos espaço */
+    text-align: center;
+    animation: fadeIn 1s var(--transition-ease) forwards;
     opacity: 0;
     transform: translateY(20px);
-    height: 0; 
-    overflow: hidden; 
-    pointer-events: none; 
-    position: absolute; 
-    width: calc(100% - 4rem); 
-    max-width: 1200px;
-    padding: 0;
+    position: relative;
+    margin: var(--spacing-lg) auto; /* Adiciona margem superior e inferior, centraliza horizontalmente */
+}
+
+/* Esconde o header interno do container em todas as páginas, já que a navbar é a principal */
+/* Ajustado para não afetar as páginas de login/registro que não têm navbar fixa */
+.container > header {
+    display: none; /* Esconde se não for página de login/register */
+}
+/* Re-exibe o header interno para login/register se ele não tiver a navbar */
+.full-screen-center .container > header {
+    display: block; /* Volta a exibir o header interno para login/register */
 }
 
 
-.column { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 1.5rem; 
+/* Efeito Fade-in */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.card {
-    background: var(--card-bg-color);
-    border-radius: 20px;
-    border: 1px solid var(--border-color);
-    padding: 30px;
-    box-shadow: 0 8px 32px 0 var(--shadow-color);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    animation: fadeIn 0.6s ease-out forwards;
-    opacity: 0;
-    position: relative; 
-}
-.card .card-header { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    margin-bottom: 1rem; 
-}
-.card h3 { 
-    font-size: 1rem; 
-    font-weight: 600; 
-    margin: 0; 
-    color: var(--text-primary);
-}
-.card .card-subtitle { 
-    font-size: 0.9rem; 
-    color: var(--text-secondary); 
-    margin-bottom: 1.5rem; 
-}
-.balance-amount { 
-    font-size: 2.8rem; 
-    font-weight: 600; 
-    letter-spacing: -2px; 
-    margin-bottom: 1rem; 
-    color: var(--text-primary); 
+/* Seções (Cards) - Mais Compactas */
+section {
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    box-shadow: 0 5px 15px var(--color-shadow-light); /* Sombra mais discreta */
+    text-align: left;
+    transition: transform var(--transition-speed) var(--transition-ease), box-shadow var(--transition-speed) var(--transition-ease);
+    border: 1px solid var(--color-border); /* Borda sutil para definir o card */
 }
 
-/* Listas */
-.transaction-list ul, .investment-list ul { 
-    list-style: none; 
-    max-height: 200px; 
-    overflow-y: auto; 
-    padding-right: 10px; 
-}
-.transaction-list li, .goal-item, .report-item, .investment-item { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    padding: 12px 0; 
-    border-bottom: 1px solid var(--border-color); 
-    flex-wrap: wrap; 
-}
-.transaction-list li:last-child, .goal-item:last-child, .report-item:last-child, .investment-item:last-child { 
-    border-bottom: none; 
-}
-.transaction-amount.receita { 
-    color: var(--success-color); 
-}
-.transaction-amount.despesa { 
-    color: var(--danger-color); 
+section:hover {
+    transform: translateY(-3px); /* Efeito sutil ao passar o mouse */
+    box-shadow: 0 8px 20px var(--color-shadow-medium);
 }
 
-/* Metas e Relatórios */
-.goal-item, .report-item { 
-    align-items: flex-start; 
-}
-.goal-info, .report-info, .investment-info { 
-    flex: 1; 
-    min-width: 150px; 
-}
-.goal-info span, .report-info span, .investment-info span { 
-    display: block; 
-}
-.info-description { 
-    font-weight: 500; 
-    color: var(--text-primary);
-}
-.info-subtext { 
-    font-size: 0.85rem; 
-    color: var(--text-secondary); 
-}
-.progress-bar { 
-    width: 100%; 
-    height: 8px; 
-    background-color: var(--progress-bar-bg); 
-    border-radius: 5px; 
-    margin-top: 8px; 
-    overflow: hidden; 
-}
-.progress { 
-    height: 100%; 
-    background-color: var(--progress-bar-fill); 
-    border-radius: 5px; 
-    transition: width 0.4s ease; 
-}
-.goal-actions, .investment-actions { 
-    display: flex; 
-    gap: 0.5rem; 
-    margin-left: auto; 
+section h2 {
+    font-size: 1.4em; /* Tamanho reduzido */
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text-dark);
+    font-weight: 600;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-xs);
+    letter-spacing: -0.1px;
 }
 
-/* Botões */
-.btn { 
-    display: inline-block; 
-    background-color: var(--btn-bg); 
-    color: var(--btn-text); 
-    padding: 12px 20px; 
-    border-radius: 8px; 
-    text-decoration: none; 
-    font-weight: 600; 
-    font-size: 0.9rem; 
-    transition: all 0.3s ease; 
-    border: none; 
-    cursor: pointer; 
-    margin-top: 1rem; 
-}
-.btn:hover { 
-    transform: translateY(-2px); 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
-}
-.btn-small { 
-    background-color: rgba(255, 255, 255, 0.1); 
-    color: var(--text-primary); 
-    border: 1px solid var(--border-color); 
-    padding: 5px 12px; 
-    font-size: 0.8rem; 
-    font-weight: 600; 
-    cursor: pointer; 
-    border-radius: 6px; 
-    transition: background-color 0.2s ease; 
-}
-.btn-small:hover { 
-    background-color: rgba(255, 255, 255, 0.2); 
-}
-.delete-btn { 
-    background: var(--danger-color); 
-    color: white; 
-    border: none; 
-    border-radius: 50%; 
-    width: 24px; 
-    height: 24px; 
-    cursor: pointer; 
-    font-size: 14px; 
-    line-height: 24px; 
-    text-align: center; 
-    opacity: 0; 
-    transition: opacity 0.2s ease, transform 0.2s ease; 
-    margin-left: 15px; 
-    flex-shrink: 0; 
-}
-.transaction-list li:hover .delete-btn,
-.investment-list li:hover .delete-btn { 
-    opacity: 1; 
-    transform: scale(1.1); 
-}
-.delete-btn:hover {
-    background: darken(var(--danger-color), 10%); 
+/* Saldo Atual */
+.balance-section {
+    text-align: center;
 }
 
-/* Modal com efeito de vidro */
-.modal-overlay { 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    background-color: rgba(0, 0, 0, 0.6); 
-    opacity: 0; 
-    visibility: hidden; 
-    transition: opacity 0.3s ease, visibility 0.3s ease; 
-    z-index: 1000; 
-}
-.modal-overlay.active { 
-    opacity: 1; 
-    visibility: visible; 
-}
-.modal-content {
-    background: var(--card-bg-color);
-    border-radius: 20px;
-    border: 1px solid var(--border-color);
-    padding: 30px;
-    box-shadow: 0 8px 32px 0 var(--shadow-color);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    width: 90%;
-    max-width: 500px;
-    transform: translateY(-20px);
-    transition: transform 0.3s ease;
-    position: relative; 
-}
-.modal-overlay.active .modal-content { 
-    transform: translateY(0); 
-}
-.modal-header { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    margin-bottom: 2rem; 
-}
-.modal-header h2 { 
-    font-size: 1.2rem; 
-    color: var(--text-primary); 
-}
-.close-modal { 
-    font-size: 1.8rem; 
-    cursor: pointer; 
-    border: none; 
-    background: none; 
-    color: var(--text-secondary); 
-    transition: color 0.2s ease;
-}
-.close-modal:hover {
-    color: var(--text-primary);
-}
-.form-group { 
-    margin-bottom: 1.5rem; 
-}
-.form-group label { 
-    display: block; 
-    font-weight: 500; 
-    margin-bottom: 0.5rem; 
-    font-size: 0.9rem; 
-    color: var(--text-secondary);
+.current-balance {
+    font-size: 2.8em; /* Saldo menor */
+    font-weight: 700;
+    color: var(--color-text-dark); /* Saldo preto */
+    margin-top: var(--spacing-sm);
+    letter-spacing: -0.5px;
+    text-shadow: none; /* Remove sombra do texto */
 }
 
-/* Estilo para inputs no modo "dark glass" */
-.form-group input, 
-.form-group select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    background-color: rgba(0,0,0,0.2);
-    color: var(--text-primary);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-.form-group input:focus,
-.form-group select:focus {
-    outline: none;
-    border-color: rgba(121, 82, 255, 0.5); 
-    box-shadow: 0 0 0 3px rgba(121, 82, 255, 0.2);
-}
-.form-group input::placeholder { 
-    color: var(--text-tertiary); 
-}
-.form-group select option { 
-    background-color: #1a1a1a; 
-    color: var(--text-primary); 
-}
-
-/* --- Feedback Messages --- */
-.message-container {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1001;
+/* Formulário de Transação - Caixas de Preenchimento Aprimoradas (Preto e Branco) */
+.transaction-form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: var(--spacing-sm); /* Espaçamento entre os campos */
 }
 
-.message {
-    padding: 12px 20px;
-    border-radius: 8px;
+.transaction-form .form-group {
+    margin-bottom: 0;
+}
+
+.transaction-form label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
     font-weight: 500;
-    opacity: 0;
-    animation: fadeIn 0.4s ease-out forwards;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    min-width: 250px;
-    text-align: center;
+    color: var(--color-text-medium);
+    font-size: 0.9em; /* Rótulos menores */
 }
 
-.message.success {
-    background-color: var(--success-color);
-    color: white;
+.transaction-form input[type="text"],
+.transaction-form input[type="number"],
+.transaction-form input[type="email"], /* Adicionado para email */
+.transaction-form input[type="password"], /* Adicionado para senha */
+.transaction-form select,
+.auth-form input[type="text"], /* Estilos para inputs de autenticação */
+.auth-form input[type="password"],
+.auth-form input[type="email"] {
+    width: 100%;
+    padding: 10px 14px; /* Padding reduzido para compactação */
+    border: 1px solid var(--color-border); /* Borda muito clara */
+    border-radius: var(--border-radius-sm);
+    font-size: 0.95em; /* Fonte um pouco menor */
+    color: var(--color-text-dark);
+    outline: none;
+    transition: border-color var(--transition-speed) var(--transition-ease),
+                box-shadow var(--transition-speed) var(--transition-ease);
+    background-color: var(--color-white); /* Fundo branco puro */
+    box-shadow: inset 0 1px 3px var(--color-shadow-light); /* Sombra interna sutil */
 }
 
-.message.error {
-    background-color: var(--danger-color);
-    color: white;
+.transaction-form input::placeholder,
+.auth-form input::placeholder {
+    color: var(--color-text-light); /* Placeholder cinza claro */
+    opacity: 1; /* Garante visibilidade em todos os navegadores */
 }
 
-.message.info {
-    background-color: var(--info-color);
-    color: white;
+.transaction-form input[type="text"]:focus,
+.transaction-form input[type="number"]:focus,
+.transaction-form input[type="email"]:focus,
+.transaction-form input[type="password"]:focus,
+.transaction-form select:focus,
+.auth-form input[type="text"]:focus,
+.auth-form input[type="password"]:focus,
+.auth-form input[type="email"]:focus {
+    border-color: var(--color-focus); /* Borda cinza ao focar */
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1); /* Sombra de foco preta/cinza */
+    background-color: var(--color-white);
 }
 
-.message.hide {
-    animation: fadeOut 0.4s ease-in forwards;
+.transaction-form select {
+    appearance: none;
+    /* Seta customizada em cinza/preto */
+    background: var(--color-white) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="%23555555" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>') no-repeat right 12px center;
+    background-size: 18px;
+    padding-right: 35px; /* Espaço para a seta */
 }
 
-/* --- Error Messages (Form Validation) --- */
-.error-message {
-    color: var(--danger-color);
-    font-size: 0.8rem;
-    margin-top: 5px;
-    height: 18px; 
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.error-message.active {
-    opacity: 1;
-}
-
-/* --- Footer --- */
-.footer {
-    text-align: center;
-    padding: 2rem 0;
-    margin-top: 3rem;
-    color: var(--text-secondary);
-    font-size: 0.85rem;
-    border-top: 1px solid var(--border-color);
-}
-
-/* --- Estilos específicos para a lista de Investimentos --- */
-.investment-item .investment-value {
+/* Botão Preto e Branco Elegante */
+.btn {
+    background-color: var(--color-text-dark); /* Preto puro para o botão */
+    color: var(--color-white);
+    padding: 12px 25px; /* Padding reduzido para compactação */
+    border: 1px solid var(--color-text-dark); /* Borda preta */
+    border-radius: var(--border-radius-sm);
+    font-size: 1.05em; /* Fonte menor */
     font-weight: 600;
-    margin-left: 10px; 
+    cursor: pointer;
+    transition: all var(--transition-speed) var(--transition-ease);
+    width: 100%;
+    margin-top: var(--spacing-md);
+    letter-spacing: 0.3px;
+    box-shadow: 0 4px 10px var(--color-shadow-medium);
+    text-transform: uppercase;
 }
 
-.investment-item .performance-indicator {
-    font-size: 0.85rem;
-    margin-left: 10px;
+.btn:hover {
+    background-color: var(--color-text-medium); /* Cinza mais claro no hover */
+    box-shadow: 0 6px 15px var(--color-shadow-medium);
+    transform: translateY(-2px); /* Efeito de elevação sutil */
 }
-.performance-positive {
-    color: var(--success-color);
+
+.btn:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px var(--color-shadow-light);
 }
-.performance-negative {
-    color: var(--danger-color);
+
+/* Lista de Transações */
+.transaction-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Espaçamento menor entre os itens */
 }
-.performance-neutral {
-    color: var(--warning-color);
+
+.transaction-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px; /* Padding menor */
+    border-radius: var(--border-radius-sm);
+    background-color: var(--color-background); /* Fundo sutil para cada item */
+    font-size: 0.95em; /* Fonte menor */
+    color: var(--color-text-medium);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid var(--color-border);
 }
-.empty-list-message {
-    color: var(--text-tertiary);
+
+.transaction-list li:hover {
+    transform: translateX(3px); /* Pequeno deslize ao passar o mouse */
+    box-shadow: 0 2px 5px var(--color-shadow-light);
+}
+
+.transaction-list li span:first-child {
+    font-weight: 500;
+    color: var(--color-text-dark);
+}
+
+.transaction-list li span:last-child {
+    font-weight: 600;
+}
+
+/* Mantendo cores para clareza em valores (entradas/saídas) */
+.transaction-list .income span:last-child {
+    color: var(--color-success);
+}
+
+.transaction-list .expense span:last-child {
+    color: var(--color-danger);
+}
+
+.no-transactions-message {
     text-align: center;
-    padding: 20px;
+    color: var(--color-text-light);
     font-style: italic;
+    padding: var(--spacing-md) 0;
+    font-size: 0.9em;
 }
 
-/* --- Estilos para Gráficos --- */
+/* Estilos para a Seção de Relatórios */
+.reports-section {
+    text-align: center; /* Centraliza o conteúdo dentro da seção */
+}
+
 .chart-container {
     position: relative;
     width: 100%;
-    height: 250px; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1rem;
+    max-width: 450px; /* Controla o tamanho máximo do gráfico */
+    margin: 20px auto; /* Centraliza o container do gráfico */
+    height: 250px; /* Define uma altura para o gráfico */
 }
 
+/* Garante que o canvas ocupe o espaço do container */
 .chart-container canvas {
-    max-width: 100%;
-    max-height: 100%;
-    background-color: transparent; 
+    width: 100% !important;
+    height: 100% !important;
 }
 
-.empty-chart-message {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: var(--text-tertiary);
-    text-align: center;
+.chart-info {
+    font-size: 0.85em;
+    color: var(--color-text-light);
+    margin-top: 15px;
     font-style: italic;
-    font-size: 0.9rem;
-    padding: 10px;
-    background-color: var(--card-bg-color); 
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    z-index: 2; 
 }
 
-.chart-container:has(canvas:not([data-chart-empty="true"])) .empty-chart-message {
-    display: none;
+/* Estilos para a Seção de Configurações */
+.settings-section {
+    text-align: left; /* Mantém o formulário alinhado à esquerda */
 }
 
-/* --- Estilos para a Seção de Autenticação --- */
-.auth-section-wrapper {
+.user-settings-form .form-group {
+    margin-bottom: var(--spacing-sm);
+}
+
+.user-settings-form small {
+    display: block;
+    font-size: 0.75em;
+    color: var(--color-text-light);
+    margin-top: 5px;
+}
+
+.settings-info {
+    font-size: 0.85em;
+    color: var(--color-text-light);
+    margin-top: 20px;
+    font-style: italic;
+    text-align: center;
+}
+
+/* --- Estilos para Páginas de Autenticação (Login/Registro) --- */
+
+.full-screen-center {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Ocupa a altura total da viewport */
-    padding: 2rem;
-    /* Ajusta para ficar acima do footer invisível do main-content-area */
-    position: absolute; 
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 100; /* Garante que está acima do conteúdo principal oculto */
-    background: #12121c; /* Fundo sólido para login */
+    min-height: 100vh;
+    padding: var(--spacing-md); /* Garante padding em telas pequenas */
 }
 
-.auth-card {
-    background: var(--card-bg-color);
-    border-radius: 20px;
-    border: 1px solid var(--border-color);
-    padding: 40px; /* Um pouco mais de padding */
-    box-shadow: 0 8px 32px 0 var(--shadow-color);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    width: 90%;
-    max-width: 400px; /* Largura máxima para o card de login */
-    text-align: center; /* Centraliza o texto */
-    animation: fadeIn 0.6s ease-out forwards;
-    opacity: 0;
+.auth-container {
+    max-width: 400px; /* Container um pouco menor para autenticação */
+    padding: var(--spacing-lg);
 }
 
-.auth-card h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-    color: var(--text-primary);
+.auth-form {
+    margin-top: var(--spacing-md);
 }
 
-.auth-card p {
-    color: var(--text-secondary);
-    margin-bottom: 2rem;
-    font-size: 0.95rem;
-}
-
-.auth-card .form-group {
-    text-align: left; /* Alinha labels à esquerda */
-}
-
-.auth-card .btn {
-    width: 100%; /* Ocupa a largura total */
-    margin-top: 1.5rem; /* Mais espaço para o botão */
-}
-
-.auth-options {
-    margin-top: 1.5rem;
+.auth-info {
     text-align: center;
+    margin-top: var(--spacing-md);
+    font-size: 0.9em;
+    color: var(--color-text-medium);
 }
 
-/* --- Responsividade --- */
+.auth-info a {
+    color: var(--color-text-dark);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--transition-speed) var(--transition-ease);
+}
+
+.auth-info a:hover {
+    color: var(--color-focus);
+}
+
+
+/* Responsividade Aprimorada */
 @media (max-width: 768px) {
-    .dashboard {
-        grid-template-columns: 1fr; 
+    .navbar-content {
+        flex-direction: column; /* Empilha logo e nav */
+        padding: var(--spacing-sm);
+        height: auto;
     }
-
-    .dashboard.hidden-section {
-        width: calc(100% - 2rem); 
+    .top-navbar {
+        height: auto;
+        padding: var(--spacing-sm) 0;
+        position: static; /* Não fica sticky em telas pequenas se for empilhar */
     }
-
-    header {
-        flex-direction: column;
-        gap: 1.5rem;
-        padding-bottom: 2rem;
+    .logo {
+        margin-bottom: var(--spacing-sm);
+        font-size: 1.6em;
     }
-
-    nav {
-        display: flex;
-        flex-wrap: wrap;
+    .logo-icon {
+        font-size: 1.1em;
+    }
+    .main-nav ul {
+        flex-wrap: wrap; /* Permite que os itens quebrem linha */
         justify-content: center;
-        gap: 1rem;
+        gap: var(--spacing-sm);
     }
-
-    nav a, #logout-btn { /* Ajuste para o botão de sair também */
-        margin-left: 0;
+    .main-nav ul li a {
+        font-size: 0.9em;
     }
 
     .container {
-        padding: 2rem 1rem;
+        padding: var(--spacing-md);
+        margin: var(--spacing-md) auto; /* Ajusta margem para a nova navbar */
+        max-width: 95%;
     }
-
-    .card {
-        padding: 20px;
+    header h1 {
+        font-size: 1.8em;
     }
-
-    .balance-amount {
-        font-size: 2.2rem;
+    section h2 {
+        font-size: 1.2em;
     }
-
-    .modal-content {
-        padding: 20px;
+    .current-balance {
+        font-size: 2.2em;
     }
-
-    .investment-actions {
-        margin-top: 10px; 
-        width: 100%; 
-        justify-content: flex-end; 
+    .transaction-form input,
+    .transaction-form select,
+    .btn,
+    .auth-form input { /* Aplicado também aos inputs de autenticação */
+        font-size: 0.9em;
+        padding: 10px 12px;
     }
-
-    .chart-container {
-        height: 200px; 
-    }
-
-    .auth-card {
-        padding: 30px;
-    }
-
-    .auth-card h2 {
-        font-size: 1.5rem;
+    .transaction-list li {
+        font-size: 0.9em;
+        padding: 10px 12px;
     }
 }
 
 @media (max-width: 480px) {
+    body {
+        font-size: 0.9em;
+    }
+    .navbar-content {
+        padding: var(--spacing-xs);
+    }
+    .top-navbar {
+        box-shadow: none; /* Removendo a sombra da navbar em telas muito pequenas para evitar poluir */
+    }
     .logo {
-        font-size: 1.3rem;
-        gap: 8px;
+        font-size: 1.4em;
     }
-    .logo svg {
-        width: 24px;
-        height: 24px;
+    .logo-icon {
+        font-size: 1em;
     }
-    .btn {
-        padding: 10px 15px;
-        font-size: 0.85rem;
+    .main-nav ul {
+        gap: var(--spacing-xs);
     }
-    .modal-header h2 {
-        font-size: 1rem;
+    .main-nav ul li a {
+        font-size: 0.8em;
+        padding: 3px 0;
     }
-    .close-modal {
-        font-size: 1.5rem;
+    .main-nav ul li a::after {
+        height: 1px;
     }
-    .investment-item .info-description {
-        width: 100%; 
+
+    .container {
+        padding: var(--spacing-sm);
+        margin: var(--spacing-md) auto;
+        border-radius: 15px;
+    }
+
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    section h2 {
+        font-size: 1.1em;
+    }
+    .current-balance {
+        font-size: 1.8em;
+    }
+    .transaction-form input,
+    .transaction-form select,
+    .btn,
+    .auth-form input { /* Aplicado também aos inputs de autenticação */
+        font-size: 0.85em;
+        padding: 8px 10px;
+    }
+    .transaction-list li {
+        font-size: 0.85em;
+        padding: 8px 10px;
+    }
+
+    .auth-container {
+        padding: var(--spacing-md);
     }
 }

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FyWQ - Registro</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="site-wrapper full-screen-center">
+        <div class="container fade-in auth-container">
+            <header>
+                <h1>Crie sua Conta FyWQ</h1>
+            </header>
+            <main>
+                <section class="register-form-section">
+                    <h2>Junte-se a nós</h2>
+                    <form class="auth-form" id="registerForm">
+                        <div class="form-group">
+                            <label for="registerUsername">Nome de Usuário</label>
+                            <input type="text" id="registerUsername" placeholder="Escolha um nome de usuário" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">Senha</label>
+                            <input type="password" id="registerPassword" placeholder="Crie sua senha" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerEmail">Email</label>
+                            <input type="email" id="registerEmail" placeholder="Seu email" required>
+                        </div>
+                        <button type="submit" class="btn">Registrar</button>
+                    </form>
+                    <p class="auth-info">Já tem uma conta? <a href="login.html">Faça login</a>.</p>
+                </section>
+            </main>
+        </div>
+    </div>
+<script src="script.js" type="module" defer></script>
+</body>
+</html>

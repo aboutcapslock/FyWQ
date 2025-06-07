@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FyWQ - Relatórios</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="site-wrapper">
+        <header class="top-navbar">
+            <div class="navbar-content">
+                <div class="logo">
+                    <span class="logo-icon">F</span><span class="logo-text">yWQ</span>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="historico.html">Histórico</a></li>
+                        <li><a href="relatorios.html" class="active">Relatórios</a></li>
+                        <li><a href="configuracoes.html">Configurações</a></li>
+                        <li><a href="#" id="logoutBtn">Sair</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <div class="container fade-in">
+            <header>
+                <h1>Relatórios Financeiros</h1>
+            </header>
+            <main>
+                <section class="reports-section" id="relatorios">
+                    <h2>Visão Mensal de Entradas e Saídas</h2>
+                    <div class="chart-container">
+                        <canvas id="monthlyChart"></canvas>
+                    </div>
+                    <p class="chart-info">Este gráfico mostra o balanço de entradas e saídas por mês.</p>
+                </section>
+            </main>
+        </div>
+    </div>
+<script src="script.js" type="module" defer></script>
+</body>
+</html>

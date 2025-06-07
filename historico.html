@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FyWQ - Histórico</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="site-wrapper">
+        <header class="top-navbar">
+            <div class="navbar-content">
+                <div class="logo">
+                    <span class="logo-icon">F</span><span class="logo-text">yWQ</span>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="historico.html" class="active">Histórico</a></li>
+                        <li><a href="relatorios.html">Relatórios</a></li>
+                        <li><a href="configuracoes.html">Configurações</a></li>
+                        <li><a href="#" id="logoutBtn">Sair</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <div class="container fade-in">
+            <header>
+                <h1>Histórico de Transações</h1>
+            </header>
+            <main>
+                <section class="transaction-list-section" id="historico">
+                    <h2>Suas Transações Anteriores</h2>
+                    <ul class="transaction-list">
+                        <li class="no-transactions-message">Nenhuma transação ainda.</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+<script src="script.js" type="module" defer></script>
+</body>
+</html>
