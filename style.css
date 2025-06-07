@@ -576,8 +576,12 @@ section h2 {
         padding: 8px 10px;
     }
     .transaction-list li {
-        font-size: 0.85em;
-        padding: 8px 10px;
+        flex-direction: column; /* Empilha descrição e valor em telas muito pequenas */
+        align-items: flex-start;
+        padding: 8px;
+    }
+    .transaction-list li span:last-child {
+        margin-top: 4px;
     }
 
     .auth-container {

@@ -3,60 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FyWQ - Início</title>
+    <title>FyWQ - Login</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="site-wrapper">
-        <header class="top-navbar">
-            <div class="navbar-content">
-                <div class="logo">
-                    <span class="logo-icon">F</span><span class="logo-text">yWQ</span>
-                </div>
-                <nav class="main-nav">
-                    <ul>
-                        <li><a href="home.html" class="active">Início</a></li>
-                        <li><a href="historico.html">Histórico</a></li>
-                        <li><a href="relatorios.html">Relatórios</a></li>
-                        <li><a href="configuracoes.html">Configurações</a></li>
-                        <li><a href="#" id="logoutBtn">Sair</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
-
-        <div class="container fade-in">
+    <div class="site-wrapper full-screen-center">
+        <div class="container fade-in auth-container">
+            <header>
+                <h1>Login no FyWQ</h1>
+            </header>
             <main>
-                <section class="balance-section" id="saldo">
-                    <h2>Saldo Atual</h2>
-                    <p class="current-balance">R$ 0,00</p>
-                </section>
-
-                <section class="transaction-form-section" id="transacao">
-                    <h2>Nova Transação</h2>
-                    <form class="transaction-form">
+                <section class="login-form-section">
+                    <h2>Acesse sua conta</h2>
+                    <form class="auth-form" id="loginForm">
                         <div class="form-group">
-                            <label for="description">Descrição</label>
-                            <input type="text" id="description" placeholder="Ex: Salário, Aluguel" required>
+                            <label for="loginUsername">Email</label>
+                            <input type="email" id="loginUsername" placeholder="Seu email" required>
                         </div>
                         <div class="form-group">
-                            <label for="amount">Valor</label>
-                            <input type="number" id="amount" placeholder="0.00" step="0.01" required>
+                            <label for="loginPassword">Senha</label>
+                            <input type="password" id="loginPassword" placeholder="Sua senha" required>
                         </div>
-                        <div class="form-group">
-                            <label for="type">Tipo</label>
-                            <select id="type">
-                                <option value="income">Entrada</option>
-                                <option value="expense">Saída</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn">Adicionar Transação</button>
+                        <button type="submit" class="btn">Entrar</button>
                     </form>
+                    <p class="auth-info">Não tem uma conta? <a href="register.html">Crie uma aqui</a>.</p>
                 </section>
             </main>
         </div>
     </div>
-<script src="script.js" type="module" defer></script>
+    <script src="script.js" type="module" defer></script>
 </body>
 </html>

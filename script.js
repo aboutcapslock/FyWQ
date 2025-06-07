@@ -79,7 +79,7 @@ async function registerUser(e) {
     } else {
         alert('Registro realizado com sucesso! Verifique seu email para confirmar a conta, se a confirmação por email estiver ativada no Supabase.');
         // Opcional: Redirecionar para uma página de "verifique seu email"
-        window.location.href = 'login.html';
+        window.location.href = 'index.html'; // Redireciona para a página de login
     }
 }
 
@@ -99,7 +99,7 @@ async function loginUser(e) {
     } else {
         currentSupabaseUser = data.user;
         alert(`Bem-vindo(a), ${currentSupabaseUser.user_metadata?.username || currentSupabaseUser.email}!`);
-        window.location.href = 'login.html';
+        window.location.href = 'home.html'; // Redireciona para a página principal (home.html)
     }
 }
 
@@ -111,7 +111,7 @@ async function logoutUser() {
     } else {
         currentSupabaseUser = null;
         alert('Você foi desconectado(a).');
-        window.location.href = 'login.html';
+        window.location.href = 'index.html'; // Redireciona para a página de login (index.html)
     }
 }
 
@@ -120,17 +120,26 @@ async function logoutUser() {
  * Aplica-se a páginas que exigem autenticação.
  */
 async function checkAuth() {
+    // Tenta obter o usuário logado
     const { data: { user }, error } = await supabase.auth.getUser();
     currentSupabaseUser = user;
 
-    const publicPages = ['login.html', 'register.html'];
+    const publicPages = ['index.html', 'register.html']; // Agora index.html é uma página pública (login)
     const currentPage = window.location.pathname.split('/').pop();
 
-    if (!currentSupabaseUser && !publicPages.includes(currentPage) && currentPage !== '') {
-        window.location.href = 'login.html';
-} else if (currentSupabaseUser && publicPages.includes(currentPage)) {
-    window.location.href = 'home.html'; // Redireciona para a página principal
-}
+    if (!currentSupabaseUser) { // Se não houver usuário logado
+        if (!publicPages.includes(currentPage) && currentPage !== '') {
+            // Se estiver em uma página protegida (não login/registro) e não for a raiz do site,
+            // redireciona para a página de login.
+            window.location.href = 'index.html';
+        }
+    } else { // Se houver usuário logado
+        if (publicPages.includes(currentPage) || currentPage === '') {
+            // Se estiver em uma página pública (login/registro) ou na raiz do site (que agora é login),
+            // redireciona para a página principal (home.html).
+            window.location.href = 'home.html';
+        }
+    }
 }
 
 // --- Funções de Dados (Transações) com Supabase ---
@@ -233,7 +242,7 @@ async function deleteTransaction(id) {
     }
 }
 
-// --- Funções de Renderização e Gráficos (não mudam muito, apenas usam 'transactions' global) ---
+// --- Funções de Renderização e Gráficos ---
 
 function updateBalance() {
     if (currentBalanceDisplay) {
@@ -283,8 +292,7 @@ function renderTransactions() {
                 <button class="delete-btn" data-id="${trans.id}" title="Remover Transação">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0
- 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4l.684 10A1.993 1.993 0 0 0 6 16h4a1.993 1.993 0 0 0 1.202-3.118L11.882 4zM2.5 3h11V2h-11z"/>
+                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4l.684 10A1.993 1.993 0 0 0 6 16h4a1.993 1.993 0 0 0 1.202-3.118L11.882 4zM2.5 3h11V2h-11z"/>
                     </svg>
                 </button>
             `;
@@ -293,8 +301,7 @@ function renderTransactions() {
 
         document.querySelectorAll('.delete-btn').forEach(button => {
             button.addEventListener('click', (e) => {
-                // Pega o id do atributo 'data-id' do botão
-                const idToDelete = button.dataset.id; // Correção: pegar do dataset do button
+                const idToDelete = button.dataset.id;
                 deleteTransaction(idToDelete);
             });
         });
@@ -431,7 +438,7 @@ function updateMonthlyChart() {
 async function loadUserSettings() {
     if (userNameInput && currentSupabaseUser) {
         // Usa o username dos metadados do usuário do Supabase Auth
-        userNameInput.value = currentSupabaseUser.user_metadata?.username || ''; // Adicionado ?. para segurança
+        userNameInput.value = currentSupabaseUser.user_metadata?.username || '';
     }
     if (userEmailInput && currentSupabaseUser) {
         userEmailInput.value = currentSupabaseUser.email || '';
@@ -478,8 +485,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const currentPath = window.location.pathname.split('/').pop();
     document.querySelectorAll('.main-nav ul li a').forEach(link => {
         const linkPath = link.getAttribute('href');
-        if (linkPath === currentPath || (currentPath === '' && linkPath === 'index.html')) {
+        if (linkPath === currentPath || (currentPath === '' && linkPath === 'home.html' && currentSupabaseUser)) {
+             // 'home.html' é ativo se for a página atual E o usuário estiver logado
+             // Ou se a rota for a raiz ('/') e o usuário estiver logado (redirecionado para home.html)
             link.classList.add('active');
+        } else if (linkPath === 'index.html' && (currentPath === 'index.html' || currentPath === '') && !currentSupabaseUser) {
+            // 'index.html' (login) é ativo se for a página atual E o usuário não estiver logado
+             link.classList.add('active');
         } else {
             link.classList.remove('active');
         }
@@ -501,7 +513,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         await loadUserTransactions(); // Carrega as transações do usuário logado
 
         // Inicializa funcionalidades baseadas na página atual
-if (window.location.pathname.endsWith('home.html') || window.location.pathname === '/') {
+        if (window.location.pathname.endsWith('home.html') || window.location.pathname === '/') {
             updateBalance();
             if (transactionForm) {
                 transactionForm.addEventListener('submit', addTransaction);
