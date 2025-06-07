@@ -99,7 +99,7 @@ async function loginUser(e) {
     } else {
         currentSupabaseUser = data.user;
         alert(`Bem-vindo(a), ${currentSupabaseUser.user_metadata?.username || currentSupabaseUser.email}!`);
-        window.location.href = 'index.html';
+        window.location.href = 'login.html';
     }
 }
 
@@ -128,10 +128,9 @@ async function checkAuth() {
 
     if (!currentSupabaseUser && !publicPages.includes(currentPage) && currentPage !== '') {
         window.location.href = 'login.html';
-    } else if (currentSupabaseUser && publicPages.includes(currentPage)) {
-        // Se já logado e tentando acessar login/register, redireciona para a página inicial
-        window.location.href = 'index.html';
-    }
+} else if (currentSupabaseUser && publicPages.includes(currentPage)) {
+    window.location.href = 'home.html'; // Redireciona para a página principal
+}
 }
 
 // --- Funções de Dados (Transações) com Supabase ---
@@ -502,7 +501,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         await loadUserTransactions(); // Carrega as transações do usuário logado
 
         // Inicializa funcionalidades baseadas na página atual
-        if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/') {
+if (window.location.pathname.endsWith('home.html') || window.location.pathname === '/') {
             updateBalance();
             if (transactionForm) {
                 transactionForm.addEventListener('submit', addTransaction);
